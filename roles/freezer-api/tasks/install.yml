@@ -66,6 +66,18 @@
     freezer_api_venv_bin_dir_by_version: "{{ 'freezer-api' | bin_dir(freezer_api_install_result.version) }}"
     freezer_api_venv_conf_dir_by_version: "{{ 'freezer-api' | config_dir(freezer_api_install_result.version) }}"
 
+- name: freezer-api | install | Ensure /var/www/freezer folder exists
+  become: yes
+  file:
+    path: /var/www/freezer
+    state: directory
+
+- name: freezer-api | install | Create symlink to freezer wsgi module
+  become: yes
+  file:
+    dest: /var/www/freezer/freezer-api
+    src: "{{ freezer_api_venv_bin_dir_by_version }}/../lib/python2.7/site-packages/freezer_api/cmd/wsgi.py"
+    state: link
 
 - name: freezer-api | install | Add group '{{ freezer_system_group }}'
   become: yes
