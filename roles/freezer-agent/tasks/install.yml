@@ -160,3 +160,19 @@
     - "{{ freezer_agent_json_log_file }}"
     - "{{ freezer_scheduler_log_file }}"
     - "{{ freezer_scheduler_json_log_file }}"
+
+- name: freezer-client | install | Check if Freezer client is available
+  become: yes
+  stat:
+    path: "{{ freezer_agent_bin_dir }}/freezer"
+  register: freezer_client_bin_result
+
+- name: freezer-client | install | Enabling freezer client for all users
+  become: yes
+  file:
+    src: "{{ freezer_agent_bin_dir }}/freezer"
+    dest: /usr/bin/freezer
+    state: link
+    force: yes
+  when: freezer_client_bin_result.stat.exists and freezer_client_bin_result.stat.xusr
+
