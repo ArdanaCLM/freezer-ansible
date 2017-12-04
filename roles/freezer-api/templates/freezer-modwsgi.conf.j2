@@ -25,7 +25,7 @@ Listen 127.0.0.1:{{ freezer_bind_port }}
 <VirtualHost *:{{ freezer_bind_port }}>
     WSGIDaemonProcess freezer-api processes={{ freezer_api_process_count }} threads={{ freezer_api_thread_count }} socket-timeout={{ freezer_api_socket_timeout }}  user={{ freezer_system_user }} group={{ freezer_system_user }} python-path={{ freezer_api_venv_bin_dir }}/../lib/python2.7/site-packages/
     WSGIProcessGroup freezer-api
-    WSGIApplicationGroup freezer-api
+    WSGIApplicationGroup %{GLOBAL}
     WSGIScriptAlias / /var/www/freezer/freezer-api
 
     ErrorLog {{ freezer_api_log_wsgi }}
