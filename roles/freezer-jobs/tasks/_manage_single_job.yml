@@ -53,7 +53,7 @@
 
 - name: freezer-jobs | manage_job | Create job
   become: yes
-  shell: "{{ freezer_scheduler_command }} job-create --file {{ job_name }}_{{ job_type }}_{{ job_storage }}.json"
+  shell: "source {{ ardanauser_home }}/backup.osrc && freezer job-create --file {{ job_name }}_{{ job_type }}_{{ job_storage }}.json --client {{ freezer_client_id }}"
   args:
     executable: /bin/bash
     chdir: /etc/freezer/scheduler/to_upload
