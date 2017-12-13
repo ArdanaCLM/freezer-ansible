@@ -18,7 +18,7 @@
 
 - name: freezer_post_configure | elasticsearch_mappings | Create elasticsearch mappings
   become: yes
-  command: "{{ freezer_api_venv_bin_dir_by_version | default(freezer_api_venv_bin_dir) }}/freezer-manage --yes --erase --verbose --config-file {{ freezer_api_venv_conf_dir_by_version | default(freezer_api_venv_conf_dir) }}/freezer-api.conf --config-dir {{ freezer_api_venv_conf_dir_by_version | default(freezer_api_venv_conf_dir) }} db update"
+  command: "{{ freezer_api_venv_bin_dir_by_version | default(freezer_api_venv_bin_dir) }}/freezer-manage --yes --erase --config-file {{ freezer_api_venv_conf_dir_by_version | default(freezer_api_venv_conf_dir) }}/freezer-api.conf --config-dir {{ freezer_api_venv_conf_dir_by_version | default(freezer_api_venv_conf_dir) }} db update"
   run_once: true
   register: freezer_manage_db_update_result
   until: "not freezer_manage_db_update_result.rc != 0"
