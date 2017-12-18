@@ -21,7 +21,12 @@ freezer_keystone_identity_uri: "{{ FRE_API.consumes_KEY_API.vips.private[0].url 
 freezer_keystone_auth_uri: "{{ FRE_API.consumes_KEY_API.vips.private[0].url }}"
 freezer_keystone_service_user: "{{ FRE_API.consumes_KEY_API.vars.keystone_freezer_user }}"
 freezer_keystone_service_password: "{{ FRE_API.consumes_KEY_API.vars.keystone_freezer_password | quote }}"
-freezer_keystone_service_tenant_name: "{{ KEY_API.vars.keystone_service_tenant }}"
+freezer_keystone_service_project_name: "{{ KEY_API.vars.keystone_service_tenant }}"
+freezer_keystone_user_domain_name: "{{ KEY_API.vars.keystone_default_domain }}"
+freezer_keystone_project_domain_name: "{{ KEY_API.vars.keystone_default_domain }}"
+memcached_servers: "{% for x in FRE.consumes_FND_MEM.members.private %}{{ x.host }}:{{ x.port }}{%if
+ not loop.last %},{% endif %}{% endfor %}"
+memcache_secret_key: "{{ FRE.consumes_FND_MEM.vars.memcached.freezer.secret_key | quote }}"
 
 freezer_bind_host: "{{ host.bind.FRE_API.admin.ip_address }}"
 freezer_bind_port: "{{ host.bind.FRE_API.admin.port }}"

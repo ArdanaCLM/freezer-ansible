@@ -17,9 +17,6 @@
 #
 #}
 [DEFAULT]
-# Show more verbose log output (sets INFO log level output)
-verbose = false
-
 # Show debugging output in logs (sets DEBUG log level output)
 #debug = False
 
@@ -41,20 +38,30 @@ use_syslogd = false
 # ================= Authtoken Options ============================
 
 [keystone_authtoken]
-identity_uri = {{ freezer_keystone_identity_uri }}
-auth_uri = {{ freezer_keystone_auth_uri }}
-admin_user = {{ freezer_keystone_service_user }}
-admin_password = {{ freezer_keystone_service_password }}
-admin_tenant_name = {{ freezer_keystone_service_tenant_name }}
+auth_type = password
+auth_url = {{ freezer_keystone_auth_uri }}
+username = {{ freezer_keystone_service_user }}
+password = {{ freezer_keystone_service_password }}
+user_domain_name = {{ freezer_keystone_user_domain_name }}
+project_name = {{ freezer_keystone_service_project_name }}
+project_domain_name = {{ freezer_keystone_project_domain_name }}
 include_service_catalog = False
-delay_auth_decision = False
 token_cache_time = {{ freezer_api_token_cache_time }}
 http_request_max_retries = {{ freezer_api_http_request_max_retries }}
+service_token_roles_required = true
+service_token_roles = admin
+memcached_servers = {{ memcached_servers }}
+memcache_security_strategy = ENCRYPT
+memcache_secret_key = {{ memcache_secret_key }}
+memcache_pool_socket_timeout = 1
+
 
 # ================= Storage Options ============================
 
 [storage]
-db = elasticsearch
+backend = elasticsearch
+
+[elasticsearch]
 hosts = http://{{ elasticsearch_http_host }}:{{ elasticsearch_http_port }}
 timeout = {{ freezer_api_elasticsearch_timeout }}
 retries = {{ freezer_api_elasticsearch_retries }}

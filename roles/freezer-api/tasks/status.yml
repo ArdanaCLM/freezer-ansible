@@ -18,7 +18,7 @@
 
 - name: freezer-api | status | Make sure freezer-api is up and responding on each node
   uri:
-    url: "http://127.0.0.1:{{ freezer_bind_port }}/v1/health"
+    url: "http://127.0.0.1:{{ freezer_bind_port }}/healthcheck"
     status_code: 200
     timeout: 100
   ignore_errors: yes
@@ -30,7 +30,7 @@
 
 - name: freezer-api | status | Report freezer-api's status
   uri:
-    url: "http://127.0.0.1:{{ freezer_bind_port }}/v1/health"
+    url: "http://127.0.0.1:{{ freezer_bind_port }}/healthcheck"
     status_code: 200
     timeout:  20
   when: freezer_api_status_result | failed
