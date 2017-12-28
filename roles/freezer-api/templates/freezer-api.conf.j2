@@ -39,6 +39,7 @@ use_syslogd = false
 
 [keystone_authtoken]
 auth_type = password
+auth_uri = {{ freezer_keystone_auth_uri }}
 auth_url = {{ freezer_keystone_auth_uri }}
 username = {{ freezer_keystone_service_user }}
 password = {{ freezer_keystone_service_password }}
