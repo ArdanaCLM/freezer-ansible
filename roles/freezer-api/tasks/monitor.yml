@@ -20,11 +20,11 @@
   become: yes
   monasca_agent_plugin:
     name: "httpcheck"
-    args: "url=http://{{ freezer_bind_host }}:{{ freezer_bind_port }}/v1/health dimensions=service:backup,component:freezer-api"
+    args: "url=http://{{ freezer_bind_host }}:{{ freezer_bind_port }}/healthcheck dimensions=service:backup,component:freezer-api"
 
 - name: freezer-api | monitor | Setup freezer-api internal VIP monitoring
   become: yes
   monasca_agent_plugin:
     name: "httpcheck"
-    args: "url={{ freezer_vip_url }}/v1/health dimensions=service:backup,component:freezer-api,monitored_host_type:vip,api_endpoint:private"
+    args: "url={{ freezer_vip_url }}/healthcheck dimensions=service:backup,component:freezer-api,monitored_host_type:vip,api_endpoint:private"
 
