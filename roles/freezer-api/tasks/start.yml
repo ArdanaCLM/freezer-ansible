@@ -16,11 +16,21 @@
 #
 ---
 
-- name: freezer-api | start | Enable Freezer-api site
+- name: freezer-api | start | Enable Freezer-api site (hlinux)
   become: yes
   command: a2ensite freezer-modwsgi
   register: freezer_api_a2_enable_site_result
   changed_when: ( freezer_api_a2_enable_site_result | success ) and ( 'already enabled' not in freezer_api_a2_enable_site_result )
+  when: ansible_os_family == 'Debian'
+
+- name: freezer-api | start | Enable Freezer-api site (SUSE)
+  become: yes
+  template:
+    src: freezer-modwsgi.conf.j2
+    dest: "{{ apache2_vhost_dir }}/freezer-modwsgi.conf"
+    mode: 0644
+  register: freezer_api_a2_enable_site_result
+  when: ansible_os_family == 'Suse'
 
 - name: freezer-api | start | Activate the latest install
   become: yes
@@ -46,6 +56,7 @@
 - include: "{{ playbook_dir }}/roles/FND-AP2/tasks/start_reload.yml"
   vars:
     apache_restart_requested: "{{ ardana_notify_freezer_api_restart_required is defined and ardana_notify_freezer_api_restart_required.changed }}"
-    apache_reload_requested: "{{ (ardana_notify_freezer_api_restart_required is defined and ardana_notify_freezer_api_restart_required.changed) or freezer_api_a2_enable_site_result.changed }}"
+    apache_reload_requested: "{{ (ardana_notify_freezer_api_restart_required is defined and ardana_notify_freezer_api_restart_required.changed) or
+                                 (freezer_api_a2_enable_site_result is defined and freezer_api_a2_enable_site_result.changed) }}"
 
 - include: status.yml
