@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2017 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -60,24 +60,22 @@
     name: freezer-scheduler
     service: freezer-agent
     cmd: freezer-scheduler
+    restart: on-failure
     user: root
     group: root
     args: "start --config-file {{ freezer_agent_conf_dir }}/scheduler.conf "
 
-- name: freezer-agent | install | Setting systemd to restart on failure
+- name: freezer-agent | install | Create systemd overlay dir
   become: yes
-  lineinfile:
-    dest: "/usr/lib/systemd/system/freezer-scheduler.service"
-    line: "Restart=on-failure"
-    insertafter: "^\\[Service]"
-  register: insert_line_restart_result
+  file:
+    name: /etc/systemd/system/freezer-scheduler.service.d/
+    state: directory
 
 - name: freezer-agent | install | Add environment loading to systemd config file
   become: yes
-  lineinfile:
-    dest: "/usr/lib/systemd/system/freezer-scheduler.service"
-    line: "EnvironmentFile=-{{ freezer_agent_conf_dir }}/systemd_env_vars.cfg"
-    insertafter: "^Restart=on-failure"
+  template:
+    src: freezer-scheduler.service.overlay
+    dest: /etc/systemd/system/freezer-scheduler.service.d/ardana.conf
   register: insert_line_env_result
 
 - name: freezer-agent | install | Notify Systemd
