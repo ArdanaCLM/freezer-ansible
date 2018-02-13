@@ -81,7 +81,7 @@
 - name: freezer-agent | install | Notify Systemd
   become: yes
   command: systemctl daemon-reload
-  when: insert_line_env_result.changed or insert_line_restart_result.changed
+  when: insert_line_env_result.changed
 
 - name: freezer-agent | install | Set the freezer-scheduler to start on reboot
   become: yes
