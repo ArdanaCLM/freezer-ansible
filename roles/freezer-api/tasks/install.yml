@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2017 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -55,7 +55,7 @@
 - name: freezer-api | install | Install Freezer_api virtual env
   become: yes
   install_package:
-    name: freezer_api
+    name: "{{ 'freezer_api' if deployer_media_legacy_layout|bool else 'freezer' }}"
     service: freezer-api
     state: present
     activate: act_off

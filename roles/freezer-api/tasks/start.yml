@@ -35,7 +35,7 @@
 - name: freezer-api | start | Activate the latest install
   become: yes
   install_package:
-    name: freezer_api
+    name: "{{ 'freezer_api' if deployer_media_legacy_layout|bool else 'freezer' }}"
     service: freezer-api
     activate: act_on
     version: "{{ freezer_api_install_result.version }}"
