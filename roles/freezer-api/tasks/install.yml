@@ -25,27 +25,10 @@
 
 - name: freezer-api | install | Install apt dependencies
   become: yes
-  apt:
+  package:
     state: latest
     name: "{{ item }}"
   with_items: freezer_api_packages
-  when: ansible_os_family == "Debian"
-
-- name: freezer-api | install | Install yum dependencies
-  become: yes
-  yum:
-    state: latest
-    name: "{{ item }}"
-  with_items: freezer_api_packages
-  when: ansible_os_family == "RedHat"
-
-- name: freezer-api | install | Install zypper dependencies
-  become: yes
-  zypper:
-    state: latest
-    name: "{{ item }}"
-  with_items: freezer_api_packages
-  when: ansible_os_family == "Suse"
 
 - name: freezer-api | install | Update venv cache
   become: yes
