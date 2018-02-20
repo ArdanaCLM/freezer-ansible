@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -23,8 +23,21 @@ freezer_agent_packages:
 ardanauser: "{{ ansible_env['USER'] }}"
 ardanauser_home: "{{ ansible_env['HOME'] }}"
 
-freezer_agent_bin_dir: "{{ 'freezer-agent' | bin_dir() }}"
-freezer_agent_conf_dir: "{{ 'freezer-agent' | config_dir() }}"
+freezer_agent_bin_dir: "{%- if deployer_media_legacy_layout|bool %}
+                            {{ 'freezer-agent' | bin_dir() }}
+                        {%- else -%}
+                            /usr/bin
+                        {%- endif -%}"
+freezer_agent_conf_dir: "{%- if deployer_media_legacy_layout|bool %}
+                            {{ 'freezer-agent' | config_dir() }}
+                        {%- else -%}
+                            /etc/freezer
+                        {%- endif -%}"
+freezer_scheduler_service: "{%- if deployer_media_legacy_layout|bool -%}
+                                freezer-scheduler
+                            {%- else -%}
+                                openstack-freezer-scheduler
+                            {%- endif -%}"
 
 # Logging
 freezer_agent_log_dir: "/var/log/freezer-agent"
@@ -32,7 +45,9 @@ freezer_agent_log_file: "{{ freezer_agent_log_dir }}/freezer-agent.log"
 freezer_agent_json_log_file: "{{ freezer_agent_log_dir }}/freezer-agent-json.log"
 freezer_scheduler_log_file: "{{ freezer_agent_log_dir }}/freezer-scheduler.log"
 freezer_scheduler_json_log_file: "{{ freezer_agent_log_dir }}/freezer-scheduler-json.log"
-freezer_log_group: adm
+freezer_user: "{{ 'root' if deployer_media_legacy_layout|bool else 'freezer' }}"
+freezer_group: "{{ freezer_user }}"
+freezer_log_group: "{{ 'adm' if deployer_media_legacy_layout|bool else freezer_group }}"
 
 # Freezer scheduler options
 freezer_scheduler_command: "source {{ ardanauser_home }}/backup.osrc && freezer-scheduler --config-file {{ freezer_agent_conf_dir }}/scheduler.conf"
