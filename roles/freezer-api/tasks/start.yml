@@ -15,22 +15,13 @@
 # under the License.
 #
 ---
-
-- name: freezer-api | start | Enable Freezer-api site (hlinux)
+- name: freezer-api | start | Enable Freezer-api site
   become: yes
-  command: a2ensite freezer-modwsgi
-  register: freezer_api_a2_enable_site_result
-  changed_when: ( freezer_api_a2_enable_site_result | success ) and ( 'already enabled' not in freezer_api_a2_enable_site_result )
-  when: ansible_os_family == 'Debian'
-
-- name: freezer-api | start | Enable Freezer-api site (SUSE)
-  become: yes
-  template:
-    src: freezer-modwsgi.conf.j2
+  file:
+    src: "{{ apache2_vhost_dir }}/freezer-modwsgi.vhost"
     dest: "{{ apache2_vhost_dir }}/freezer-modwsgi.conf"
-    mode: 0644
+    state: link
   register: freezer_api_a2_enable_site_result
-  when: ansible_os_family == 'Suse'
 
 - name: freezer-api | start | Activate the latest install
   become: yes

@@ -87,7 +87,7 @@
   become: yes
   template:
     src: freezer-modwsgi.conf.j2
-    dest: "{{ apache2_vhost_dir }}/freezer-modwsgi.conf"
+    dest: "{{ apache2_vhost_dir }}/freezer-modwsgi.vhost"
   register: ardana_notify_freezer_api_restart_required
 
 # TODO(howleyt): Can this be moved to apache playbook?

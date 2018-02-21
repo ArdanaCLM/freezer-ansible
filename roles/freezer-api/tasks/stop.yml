@@ -15,21 +15,11 @@
 # under the License.
 #
 ---
-
-- name: freezer-api | stop | Disable freezer site (hlinux)
-  become: yes
-  command: a2dissite freezer-modwsgi
-  register: disable_freezer_site_result
-  failed_when: "('ERROR' in disable_freezer_site_result.stderr
-                and 'Site freezer-modwsgi does not exist' not in disable_freezer_site_result.stderr)
-                and 'disabled' not in command_result.stdout"
-
-- name: freezer-api | stop | Disable freezer site (SUSE)
+- name: freezer-api | stop | Disable freezer site
   become: yes
   file:
     state: absent
     path: "{{ apache2_vhost_dir }}/freezer-modwsgi.conf"
-  when: ansible_os_family == 'Suse'
 
 # Reload Apache, ignore errors, if reload fails in stop as apache not
 # running, keep going
