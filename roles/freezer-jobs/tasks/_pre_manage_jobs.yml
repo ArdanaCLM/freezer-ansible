@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -20,20 +20,20 @@
 
 - include_vars: ../../freezer-jobs/defaults/jobs.yml
 
-- name: freezer-jobs | pre_manage_backup | Check for freezer-agent's presence
+- name: freezer-jobs | pre_manage_backup | Check for freezer client's presence
   become: yes
   stat:
-    path: "/usr/bin/freezer-scheduler"
-  register: freezer_scheduler_bin_result
+    path: "/usr/bin/freezer"
+  register: freezer_bin_result
 
-- name: freezer-jobs | pre_manage_backup | Report freezer-agent's absence
+- name: freezer-jobs | pre_manage_backup | Report freezer client's absence
   fail:
     msg: |
-      You are trying to use the freezer-agent to create a backup or restore job.
-      However the freezer-agent does not seem to be installed on this server.
+      You are trying to use freezer to create a backup or restore job.
+      However freezer does not seem to be installed on this server.
       This could be caused by an error in your model or because the concerned node failed earlier in the deployment process.
       Concerned server: hostname: {{ ansible_hostname }} / inventory_hostname: {{ inventory_hostname }}
-  when: not freezer_scheduler_bin_result.stat.exists
+  when: not freezer_bin_result.stat.exists
 
 - name: freezer-jobs | pre_manage_backup | Create directory
   become: yes
@@ -46,7 +46,7 @@
 
 - name: freezer-jobs | pre_manage_backup | List current freezer jobs
   become: yes
-  shell: "{{ freezer_scheduler_command }} job-list | grep -E '^\\| [a-z0-9]{32}' | cut -d '|' -f2,4 | tr '[:upper:]' '[:lower:]'; exit ${PIPESTATUS[0]}"
+  shell: "{{ freezer_command }} job-list | grep -E '^\\| [a-z0-9]{32}' | cut -d '|' -f2,4 | tr '[:upper:]' '[:lower:]'; exit ${PIPESTATUS[0]}"
   args:
     executable: /bin/bash
   register: jobs_list_result

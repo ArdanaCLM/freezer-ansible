@@ -50,7 +50,7 @@ freezer_group: "{{ freezer_user }}"
 freezer_log_group: "{{ 'adm' if deployer_media_legacy_layout|bool else freezer_group }}"
 
 # Freezer scheduler options
-freezer_scheduler_command: "source {{ ardanauser_home }}/backup.osrc && freezer-scheduler --config-file {{ freezer_agent_conf_dir }}/scheduler.conf"
+freezer_command: "source {{ ardanauser_home }}/backup.osrc && freezer"
 freezer_client_id: "{{ old_deployer_hostname | default(ansible_hostname) }}"
 freezer_scheduler_poll_interval: 60
 freezer_scheduler_loglevel: INFO

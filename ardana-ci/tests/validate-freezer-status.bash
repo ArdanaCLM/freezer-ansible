@@ -2,7 +2,7 @@
 
 #
 # (c) Copyright 2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -31,5 +31,5 @@ ansible-playbook -i hosts/verb_hosts freezer-status.yml
 test_fail
 source ~/backup.osrc
 test_fail
-freezer-scheduler job-list --all
+freezer job-list
 test_fail
