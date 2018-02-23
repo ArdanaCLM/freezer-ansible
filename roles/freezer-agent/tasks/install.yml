@@ -62,38 +62,3 @@
   service:
     name: "{{ freezer_scheduler_service }}"
     enabled: yes
-
-- name: freezer-agent | configure | Create directories
-  become: yes
-  file:
-    path: "{{ item }}"
-    mode: 0770
-    state: directory
-  with_items:
-    - /etc/freezer
-    - /etc/freezer/scheduler
-    - /etc/freezer/scheduler/conf.d
-    - /root/.freezer
-
-- name: freezer-agent | configure | Create Freezer log directory
-  become: yes
-  file:
-    path: "{{ freezer_agent_log_dir }}"
-    owner: "{{ freezer_user }}"
-    group: "{{ freezer_log_group }}"
-    mode: 0750
-    state: directory
-
-- name: freezer-agent | configure | Touch Freezer log files
-  become: yes
-  file:
-    path: "{{ item }}"
-    owner: "{{ freezer_user }}"
-    group: "{{ freezer_log_group }}"
-    mode: 0640
-    state: touch
-  with_items:
-    - "{{ freezer_agent_log_file }}"
-    - "{{ freezer_agent_json_log_file }}"
-    - "{{ freezer_scheduler_log_file }}"
-    - "{{ freezer_scheduler_json_log_file }}"

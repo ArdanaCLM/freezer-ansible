@@ -40,7 +40,7 @@ freezer_scheduler_service: "{%- if deployer_media_legacy_layout|bool -%}
                             {%- endif -%}"
 
 # Logging
-freezer_agent_log_dir: "/var/log/freezer-agent"
+freezer_agent_log_dir: "{{ '/var/log/freezer-agent' if deployer_media_legacy_layout|bool else '/var/log/freezer' }}"
 freezer_agent_log_file: "{{ freezer_agent_log_dir }}/freezer-agent.log"
 freezer_agent_json_log_file: "{{ freezer_agent_log_dir }}/freezer-agent-json.log"
 freezer_scheduler_log_file: "{{ freezer_agent_log_dir }}/freezer-scheduler.log"
