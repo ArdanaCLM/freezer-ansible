@@ -24,7 +24,8 @@
   with_items: freezer_agent_packages
 
 - include: install-legacy.yml
-  when: deployer_media_legacy_layout|bool
+  when: (deployer_media_legacy_layout|bool or
+         ansible_os_family | lower == 'redhat' )
 
 - name: freezer-agent | install | Install freezer-agent and scheduler (rpm)
   become: yes
@@ -35,7 +36,9 @@
     - openstack-freezer-agent
     - openstack-freezer-scheduler
     - python-python-logstash
-  when: not deployer_media_legacy_layout|bool
+  when:
+    - not deployer_media_legacy_layout|bool
+    - ansible_os_family | lower == 'suse'
 
 - name: freezer-agent | install | Create systemd overlay dir
   become: yes
