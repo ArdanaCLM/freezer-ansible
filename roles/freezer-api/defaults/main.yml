@@ -35,6 +35,7 @@ freezer_vip_url: "{{ FRE_API.advertises.vips.private[0].url }}"
 
 freezer_system_user: freezer
 freezer_system_group: freezer
+freezer_home_dir: /var/lib/freezer
 
 freezer_api_venv_conf_dir: "{{ 'freezer-api' | config_dir() }}"
 freezer_api_venv_bin_dir: "{{ 'freezer-api' | bin_dir() }}"

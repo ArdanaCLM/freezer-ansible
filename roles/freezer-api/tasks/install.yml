@@ -74,6 +74,15 @@
     name: "{{ freezer_system_user }}"
     group: "{{ freezer_system_group }}"
     createhome: no
-    home: /tmp
+    home: "{{ freezer_home_dir }}"
     shell: /bin/true
     state: present
+
+- name: freezer-api | install | Add user home
+  become: yes
+  file:
+    path: "{{ freezer_home_dir }}"
+    state: directory
+    owner: "{{ freezer_system_user }}"
+    group: "{{ freezer_system_group }}"
+    mode: 0750
