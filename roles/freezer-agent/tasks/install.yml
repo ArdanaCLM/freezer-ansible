@@ -19,7 +19,7 @@
 - name: freezer-agent | install | Install package dependencies
   become: yes
   package:
-    state: latest
+    state: present
     name: "{{ item }}"
   with_items: freezer_agent_packages
 
@@ -30,7 +30,7 @@
 - name: freezer-agent | install | Install freezer-agent and scheduler (rpm)
   become: yes
   package:
-    state: latest
+    state: present
     name: "{{ item }}"
   with_items:
     - openstack-freezer-agent

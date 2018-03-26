@@ -26,7 +26,7 @@
 - name: freezer-api | install | Install apt dependencies
   become: yes
   package:
-    state: latest
+    state: present
     name: "{{ item }}"
   with_items: freezer_api_packages
 
