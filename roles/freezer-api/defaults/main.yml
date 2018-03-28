@@ -1,6 +1,6 @@
 #
 # (c) Copyright 2015-2016 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -24,7 +24,7 @@ freezer_keystone_service_password: "{{ FRE_API.consumes_KEY_API.vars.keystone_fr
 freezer_keystone_service_project_name: "{{ KEY_API.vars.keystone_service_tenant }}"
 freezer_keystone_user_domain_name: "{{ KEY_API.vars.keystone_default_domain }}"
 freezer_keystone_project_domain_name: "{{ KEY_API.vars.keystone_default_domain }}"
-freezer_keystone_cacert: "/etc/ssl/certs/ca-certificates.crt"
+freezer_keystone_cacert: "{{ trusted_ca_bundle }}"
 memcached_servers: "{% for x in FRE.consumes_FND_MEM.members.private %}{{ x.host }}:{{ x.port }}{%if
  not loop.last %},{% endif %}{% endfor %}"
 memcache_secret_key: "{{ FRE.consumes_FND_MEM.vars.memcached.freezer.secret_key | quote }}"
