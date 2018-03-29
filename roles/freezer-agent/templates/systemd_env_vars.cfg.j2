@@ -1,7 +1,7 @@
 {#
 #
 # (c) Copyright 2015 Hewlett Packard Enterprise Development LP
-# (c) Copyright 2017 SUSE LLC
+# (c) Copyright 2017-2018 SUSE LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -27,5 +27,5 @@ OS_PROJECT_DOMAIN_NAME=Default
 OS_USER_DOMAIN_NAME=Default
 OS_IDENTITY_API_VERSION=3
 OS_AUTH_VERSION=3
-OS_CACERT=/etc/ssl/certs/ca-certificates.crt
+OS_CACERT={{ trusted_ca_bundle }}
 OS_ENDPOINT_TYPE=internalURL
