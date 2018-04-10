@@ -31,7 +31,7 @@
     - policy.json
   register: ardana_notify_freezer_api_restart_required
 
-- name: freezer-api | install | Create logging directory
+- name: freezer-api | configure | Create logging directory
   become: yes
   file:
     path: "{{ freezer_api_log_dir }}"
@@ -40,7 +40,7 @@
     mode: 0750
     state: directory
 
-- name: freezer-api | install | Create audit logging directory
+- name: freezer-api | configure | Create audit logging directory
   become: yes
   file:
     path: "{{ freezer_api_log_audit_dir }}"
@@ -83,7 +83,7 @@
     mode: 0770
     state: directory
 
-- name: freezer-api | install | Copies modwsgi config file
+- name: freezer-api | configure | Copies modwsgi config file
   become: yes
   template:
     src: freezer-modwsgi.conf.j2
@@ -91,7 +91,7 @@
   register: ardana_notify_freezer_api_restart_required
 
 # TODO(howleyt): Can this be moved to apache playbook?
-- name: freezer-api | install | Enable wsgi module in apache
+- name: freezer-api | configure | Enable wsgi module in apache
   become: yes
   apache2_module:
     state: present
