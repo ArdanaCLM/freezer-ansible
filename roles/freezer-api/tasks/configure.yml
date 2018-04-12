@@ -26,6 +26,7 @@
     mode: 0640
   with_items:
     - freezer-api.conf
+    - freezer-api-audit-map.conf
     - freezer-api-paste.ini
     - freezer-api-logging.conf
     - policy.json
@@ -48,7 +49,7 @@
     group: "{{ freezer_api_log_group }}"
     mode: 0750
     state: directory
-  when: freezer_api_audit_enabled
+  when: freezer_api_audit_enabled | bool
 
 - name: freezer-api | configure | Touch log files
   become: yes
@@ -72,7 +73,7 @@
     group: "{{ freezer_api_log_group }}"
     mode: 0640
     state: touch
-  when: freezer_api_audit_enabled
+  when: freezer_api_audit_enabled | bool
 
 - name: freezer-api | configure | Create config directory
   become: yes
