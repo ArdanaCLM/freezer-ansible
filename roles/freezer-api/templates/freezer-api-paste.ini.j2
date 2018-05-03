@@ -1,3 +1,19 @@
+{#
+# (c) Copyright 2018 SUSE LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+#}
 [app:api_versions]
 paste.app_factory = freezer_api.api.versions:api_versions
 
@@ -10,6 +26,12 @@ paste.app_factory = freezer_api.service:freezer_appv2_factory
 [app:service_v1]
 use = egg:freezer-api#service_v1
 
+{% if freezer_api_audit_enabled | bool %}
+[filter:audit]
+paste.filter_factory = keystonemiddleware.audit:filter_factory
+audit_map_file = /etc/freezer/freezer-api-audit-map.conf
+
+{% endif %}
 [filter:authtoken]
 paste.filter_factory = keystonemiddleware.auth_token:filter_factory
 
@@ -28,7 +50,9 @@ paste.filter_factory = freezer_api.api.versions:VersionNegotiator.factory
 paste.filter_factory = oslo_middleware:HTTPProxyToWSGI.factory
 
 [pipeline:main]
-pipeline = healthcheck http_proxy_to_wsgi versionsNegotiator authtoken context backupapp
+pipeline = healthcheck http_proxy_to_wsgi versionsNegotiator authtoken
+{%- if freezer_api_audit_enabled | bool %} audit{% endif %}
+ context backupapp
 
 [pipeline:unauthenticated_freezer_api]
 pipeline = http_proxy_to_wsgi healthcheck freezer_app

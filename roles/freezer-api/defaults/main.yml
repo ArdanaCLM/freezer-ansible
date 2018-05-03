@@ -64,6 +64,7 @@ freezer_api_elasticsearch_timeout: 60
 
 freezer_api_conf_symlinks:
   - { dst: '/etc/freezer/freezer-api.conf', src: 'freezer-api.conf' }
+  - { dst: '/etc/freezer/freezer-api-audit-map.conf', src: 'freezer-api-audit-map.conf' }
   - { dst: '/etc/freezer/freezer-api-logging.conf', src: 'freezer-api-logging.conf' }
   - { dst: '/etc/freezer/freezer-api-paste.ini', src: 'freezer-api-paste.ini' }
   - { dst: '/etc/freezer/policy.json', src: 'policy.json' }
