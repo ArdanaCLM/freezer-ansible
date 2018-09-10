@@ -16,7 +16,7 @@
 #
 ---
 - set_fact:
-    job_is_present: "{{ jobs_list_result.stdout.find((job_description | lower)) != -1 }}"
+    job_is_present: "{{ jobs_list_result.stdout.find( job_description ) != -1 }}"
 
 - name: freezer-jobs | manage_single_job | Show which job is being managed
   debug:
@@ -36,7 +36,7 @@
   args:
     executable: /bin/bash
   with_items: jobs_list_result.stdout_lines
-  when: (( job_description | lower ) in item ) and
+  when: ( job_description in item ) and
         (( job_copy_result is defined and job_copy_result.changed ) or
         (( job_is_present | bool ) and not ( job_is_enabled | bool )))
   register: remove_job_result
