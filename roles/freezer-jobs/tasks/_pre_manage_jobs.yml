@@ -46,7 +46,7 @@
 
 - name: freezer-jobs | pre_manage_backup | List current freezer jobs
   become: yes
-  shell: "{{ freezer_command }} job-list | grep -E '^\\| [a-z0-9]{32}' | cut -d '|' -f2,4 | tr '[:upper:]' '[:lower:]'; exit ${PIPESTATUS[0]}"
+  shell: "{{ freezer_command }} job-list -C  {{ ansible_hostname }} | grep -E '^\\| [a-z0-9]{32}' | cut -d '|' -f2,3 ; exit ${PIPESTATUS[0]}"
   args:
     executable: /bin/bash
   register: jobs_list_result
