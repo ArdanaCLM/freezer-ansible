@@ -32,7 +32,7 @@
 
 - name: freezer-jobs | manage_job | Remove job
   become: yes
-  shell: "{{ freezer_command }} job-delete -j {{ item.split('|')[0] | trim() }}"
+  shell: "{{ freezer_command }} job-delete {{ item.split('|')[0] | trim() }}"
   args:
     executable: /bin/bash
   with_items: jobs_list_result.stdout_lines

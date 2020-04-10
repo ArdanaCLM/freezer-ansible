@@ -76,6 +76,66 @@ jobs:
           remove_older_than: 365
         restore_options:
            overwrite: true
+      - backup_name: freezer_ansible_backup
+        backup_path: /etc/ansible
+        restore_path: /etc/ansible/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
+      - backup_name: freezer_tmp_tls_cacerts_backup
+        backup_path: /tmp/ardana_tls_cacerts
+        restore_path: /tmp/ardana_tls_cacerts/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
+      - backup_name: freezer_tmp_tls_certs_backup
+        backup_path: /tmp/ardana_tls_certs
+        restore_path: /tmp/ardana_tls_certs/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
+      - backup_name: freezer_tmp_octavia_tls_backup
+        backup_path: /tmp/ardana_octavia_tls
+        restore_path: /tmp/ardana_octavia_tls/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
+      - backup_name: freezer_tmp_octavia_certs_backup
+        backup_path: /tmp/ardana_octavia_certs
+        restore_path: /tmp/ardana_octavia_certs/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
+      - backup_name: freezer_ssl_backup
+        backup_path: /etc/ssl
+        restore_path: /etc/ssl/
+        max_retries_interval: 600
+        backup_options:
+          snapshot: true
+          max_level: 15
+          remove_older_than: 365
+        restore_options:
+           overwrite: true
       - backup_name: freezer_cobbler_backup
         backup_path: /var/lib/cobbler/
         restore_path: /var/lib/cobbler/
